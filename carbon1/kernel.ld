@@ -24,24 +24,22 @@ SECTIONS {
 		*(.text)
 	} > BOOTROM
 
-	.irs_handler : {
-		*(.irs_handler)
-	} > BOOTROM
-
 	.rodata : {
 		*(.rodata)
 	} > BOOTROM
+
+	.bss (NOLOAD) : {
+		__bss_start = . ;
+		*(.bss*)
+		*(COMMON)
+		__bss_end = . ;
+	} > OCRAM
 
 	.data : {
 		*(.data)
 	} > OCRAM
 
-	COMMON : {
-		*(COMMON)
-	}
-
 	/DISCARD/ : {
 		*(*)
 	}
-
 }

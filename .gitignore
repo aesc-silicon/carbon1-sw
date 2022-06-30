@@ -1,2 +1,5 @@
-build/
+build/*
+!build/kernel.img
 riscv32-unknown-elf/
+*openocd*/
+*xml

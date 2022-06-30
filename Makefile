@@ -55,5 +55,13 @@ $(BUILD):
 	mkdir $@
 
 # Rule to clean files.
-clean : 
+clean:
 	-rm -rf $(BUILD)
+
+prepare_image:
+	dd if=/dev/zero of=build/flash.bin bs=64M count=1
+	dd if=build/kernel.img of=build/flash.bin conv=notrunc
+
+flash_buspirate: prepare_image
+	date
+	time flashrom -p buspirate_spi:dev=/dev/ttyUSB0,spispeed=2M -c MT25QL512 -l spi.layout -i flash -n -w build/flash.bin
